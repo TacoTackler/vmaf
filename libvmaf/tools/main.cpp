@@ -191,6 +191,11 @@ static int run_wrapper(char *fmt, int width, int height, char *ref_path, char *d
                        disable_clip, disable_avx, enable_transform, phone_model, do_psnr, do_ssim,
                        do_ms_ssim, pool_method, n_thread, n_subsample, enable_conf_interval);
 
+    if (ret < 0)
+        printf("0 0 0 0");
+    else
+        printf("0 0 0 %f", score);
+
 fail_or_end:
     if (s->ref_rfile)
     {
