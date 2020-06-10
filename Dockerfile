@@ -24,13 +24,16 @@ RUN pip3 install --upgrade pip
 RUN pip install numpy scipy matplotlib notebook pandas sympy nose scikit-learn scikit-image h5py sureal meson
 
 # retrieve source code
-RUN git clone --depth 1 https://github.com/Netflix/vmaf.git /vmaf
+RUN git clone --depth 1 -b add_print_vmaf_score https://github.com/edmond-zhu/vmaf.git /vmaf
 
 # setup environment
 ENV PYTHONPATH=/vmaf/python/src:/vmaf:$PYTHONPATH
 ENV PATH=/vmaf:/vmaf/src/libvmaf:$PATH
 
 # make vmaf
-RUN cd /vmaf && make
+RUN cd /vmaf && \
+    make && \
+    make install DESTDIR=/home/build && \
+    make install
 
 WORKDIR /root/
